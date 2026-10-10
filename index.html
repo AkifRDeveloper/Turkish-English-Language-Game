@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Word Rush — Kelime Oyunu</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div id="fx"></div>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">W</div><div><b>WORD RUSH</b><small>English × Türkçe</small></div></div>
+  <div class="top-actions"><div class="player"><b id="accountName">Misafir</b><small id="accountLevel">Misafir</small></div><button id="loginButton" class="ghost">Giriş</button><button id="logoutButton" class="ghost hidden">Çıkış</button><button id="soundButton" class="icon">🔊</button></div>
+</header>
+<main>
+<section id="menuScreen" class="screen active">
+  <div class="hero">
+    <div class="eyebrow">⚡ QUICK • FUN • LEARN</div>
+    <h1>Kelimeyi yakala.<br><span>Skoru patlat.</span></h1>
+    <p>İngilizce kelimeyi Türkçeden bul. Hızlan, combo yap ve kendi rekorunu geç.</p>
+    <button id="startButton" class="play"><span>▶</span> OYNA</button>
+  </div>
+  <div class="stats-row"><div><small>🏆 REKOR</small><b id="bestScore">0</b></div><div><small>🔥 EN İYİ COMBO</small><b id="bestStreak">0</b></div><div><small>⭐ XP</small><b id="menuXp">0</b></div><div><small>🎮 OYUN</small><b id="gamesPlayed">0</b></div></div>
+  <div class="mode-row">
+    <button class="mode selected" data-mode="classic"><i>🏆</i><b>Klasik</b><small>10 tur</small></button>
+    <button class="mode" data-mode="blitz"><i>⚡</i><b>Blitz</b><small>60 saniye</small></button>
+    <button class="mode" data-mode="survival"><i>❤️</i><b>Survival</b><small>3 hata</small></button>
+    <button class="mode" data-mode="streak"><i>🔥</i><b>Combo</b><small>25 tur</small></button>
+  </div>
+  <div class="difficulty"><span>Zorluk</span><button class="diff selected" data-level="kolay">🌱 Kolay</button><button class="diff" data-level="orta">⚡ Orta</button><button class="diff" data-level="zor">🔥 Zor</button></div>
+  <div class="tip">💡 <b>Misafir</b> oynarsan sayfa yenilenince skorun sıfırlanır. Giriş yaparsan rekorun kaydedilir.</div>
+</section>
+
+<section id="gameScreen" class="screen">
+  <div class="game-top"><button id="backButton" class="ghost">← Menü</button><div id="modeLabel" class="pill">🏆 Klasik</div><div class="score"><small>SKOR</small><b id="score">0</b></div></div>
+  <div class="hud"><div class="lives" id="lives">❤️ ❤️ ❤️</div><div class="combo"><b id="multiplier">x1</b><span id="comboLabel">Combo hazır</span></div><div class="timer"><b id="timerText">12</b><div><i id="progressBar"></i></div></div></div>
+  <div id="eventBanner" class="event hidden"></div>
+  <div id="bossBar" class="boss hidden"><span>👑 BOSS</span><div><i id="bossHp"></i></div><b id="bossText">3 HP</b></div>
+  <div class="arena">
+    <div class="round-line"><span id="roundText">TUR 1</span><span id="category">KELİME</span></div>
+    <div id="wordCard" class="word-card"><small>İNGİLİZCESİNİ BUL</small><strong id="turkceWord">elma</strong><div id="microLearn" class="micro hidden"></div></div>
+    <div id="choiceGrid" class="choices"></div>
+    <div class="game-bottom"><button id="listenButton" class="tool">🔊 Dinle</button><button id="hintButton" class="tool">💡 İpucu</button><button id="speakButton" class="mic">🎤 Söyle</button><button id="skipButton" class="tool">⏭ Pas</button></div>
+    <div class="powerups"><button id="doubleButton">✖️2 <small>puan</small></button><button id="timeButton">⏱ +5 <small>saniye</small></button><button id="shieldButton">🛡️ <small>kalkan</small></button></div>
+    <div id="status" class="status">Bir cevap seç.</div>
+  </div>
+</section>
+
+<section id="resultScreen" class="screen"><div class="result">
+  <div id="resultEmoji" class="result-emoji">🏆</div><small>RUN COMPLETE</small><h1 id="resultTitle">Harika!</h1>
+  <div class="big-score"><small>SKOR</small><b id="finalScore">0</b></div>
+  <div class="result-stats"><div><b id="correctCount">0</b><span>Doğru</span></div><div><b id="accuracy">0%</b><span>Başarı</span></div><div><b id="finalStreak">0</b><span>En iyi combo</span></div><div><b id="xpGain">+0</b><span>XP</span></div></div>
+  <div id="newRecord" class="record hidden">🏆 Yeni rekor!</div><div id="achievementList" class="badges"></div>
+  <div class="result-buttons"><button id="playAgainButton" class="play">▶ TEKRAR OYNA</button><button id="menuResultButton" class="ghost">Ana Menü</button></div>
+</div></section>
+</main>
+<div id="authModal" class="modal hidden"><div class="auth"><button id="closeAuthButton" class="close">×</button><div class="tabs"><button id="loginTab" class="active">Giriş</button><button id="registerTab">Kayıt</button></div><h2 id="authTitle">Hesabına giriş yap</h2><p id="authDescription">Rekorunu kaydet.</p><form id="authForm"><input id="usernameInput" placeholder="Kullanıcı adı" maxlength="20" required><input id="passwordInput" type="password" placeholder="Şifre" required><div id="authError" class="error hidden"></div><button class="play" type="submit" id="authSubmit">Giriş Yap</button></form></div></div>
+<footer>WORD RUSH • OYNA → ÖĞREN → TEKRAR OYNA</footer>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body></html>
